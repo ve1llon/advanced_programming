@@ -6,7 +6,7 @@
 
 template<typename... nTypes>
 struct TypeList{
-
+public:
     template<int i, typename... U>
     struct GetType{};
 
