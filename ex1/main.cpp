@@ -1,7 +1,6 @@
 #include <iostream>
 #include "ex1.h"
 
-
 void console_utility(){
     std::string command_name;
     std::unordered_map<std::string, User*> users;
@@ -17,9 +16,9 @@ void console_utility(){
             std::cin >> n_userid;
             std::cin >> n_groupid;
 
-            for (auto i : users){
+            for (auto& i : users){
                 if (i.first == n_userid)
-                    for (auto j : groups)
+                    for (auto& j : groups)
                         if (j.first == n_groupid)
                             j.second->set_user(i.second);
             }
@@ -43,8 +42,11 @@ void console_utility(){
             std::string n_userid;
             std::cin >> n_userid;
 
-            for (auto i : users){
+            for (auto& i : users){
                 if (i.first == n_userid){
+                    Group* n_group = i.second->get_group();
+                    if (n_group != nullptr)
+                        n_group->clear_user(i.first);
                     delete i.second;
                     users.erase(n_userid);
                     break;
@@ -54,16 +56,16 @@ void console_utility(){
         }
 
         else if (command_name == "allUsers"){
-            for (auto i : users)
-                std::cout << i.second->get_id() << ' ' << i.second->get_name() << ' ' << i.second->get_addinf() << std::endl;
+            for (auto& i : users)
+                std::cout << i.first << ' ' << i.second->get_name() << ' ' << i.second->get_addinf() << std::endl;
         }
 
         else if (command_name == "getUser"){
             std::string n_userid;
             std::cin >> n_userid;
-            for (auto i : users){
+            for (auto& i : users){
                 if (i.first == n_userid)
-                    std::cout << i.second->get_id() << ' ' << i.second->get_name() << ' ' << i.second->get_addinf() << std::endl;
+                    std::cout << i.first << ' ' << i.second->get_name() << ' ' << i.second->get_addinf() << std::endl;
             }
         }
 
@@ -78,7 +80,7 @@ void console_utility(){
             std::string n_groupid;
             std::cin >> n_groupid;
 
-            for (auto i : groups){
+            for (auto& i : groups){
                 if (i.first == n_groupid){
                     delete i.second;
                     groups.erase(n_groupid);
@@ -89,11 +91,11 @@ void console_utility(){
         }
 
         else if (command_name == "allGroups"){
-            for (auto i : groups){
-                std::cout << "Group_id: " << i.second->get_id() << " Group_users:" << std::endl;
+            for (auto& i : groups){
+                std::cout << "Group_id: " << i.first << " Group_users:" << std::endl;
                 auto n_groupusers = i.second->get_users();
-                for (auto j : n_groupusers)
-                    std::cout << j.second->get_id() << ' ' << j.second->get_name() << ' ' << j.second->get_addinf() << std::endl;
+                for (auto& j : n_groupusers)
+                    std::cout << j.first << ' ' << j.second->get_name() << ' ' << j.second->get_addinf() << std::endl;
             }
         }
 
@@ -101,12 +103,12 @@ void console_utility(){
             std::string n_groupid;
             std::cin >> n_groupid;
 
-            for (auto i : groups){
-                if (i.second->get_id() == n_groupid){
-                    std::cout << "Group_id: " << i.second->get_id() << " Group_users:" << std::endl;
+            for (auto& i : groups){
+                if (i.first == n_groupid){
+                    std::cout << "Group_id: " << i.first << " Group_users:" << std::endl;
                     auto n_groupusers = i.second->get_users();
-                    for (auto j : n_groupusers)
-                        std::cout << j.second->get_id() << ' ' << j.second->get_name() << ' ' << j.second->get_addinf() << std::endl;
+                    for (auto& j : n_groupusers)
+                        std::cout << j.first << ' ' << j.second->get_name() << ' ' << j.second->get_addinf() << std::endl;
                 }
             }
         }
@@ -119,8 +121,7 @@ void console_utility(){
 
 }
 
-int main()
-{
+int main(){
     console_utility();
     return 0;
 }

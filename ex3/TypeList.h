@@ -63,5 +63,4 @@ public:
     template<typename T>
     using BeginAdd = TypeList<T, nTypes...>;
 };
-
 #endif // TYPELIST_H

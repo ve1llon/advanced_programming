@@ -36,6 +36,7 @@ public:
         return usergroup;
     }
 
+
 private:
     std::string userid = "";
     std::string username = "";
@@ -59,13 +60,14 @@ public:
     }
 
     void set_user(User* n_user){
-        groupusers[n_user->get_id()] = n_user;
+        groupusers.insert({n_user->get_id(), n_user});
         n_user->set_group(this);
     }
 
     void clear_user(std::string n_userid){
         groupusers.erase(n_userid);
     }
+
 
 private:
     std::string groupid = "";

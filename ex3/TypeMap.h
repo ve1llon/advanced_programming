@@ -13,7 +13,7 @@ public:
     template<typename T>
     void AddValue(T value){
         constexpr int index = types::template GetIndex<T>();
-        values[index] = value;
+        values.insert({index, value});
     }
 
     template<typename T>
