@@ -34,8 +34,18 @@ void console_utility(){
             if (!n_addinf.empty())
                 n_addinf.erase(0,1); //удаляю пробел в начале строки n_addinf
 
-            User* user = new User(n_userid, n_username, n_addinf);
-            users.insert({n_userid, user});
+            bool is_new_id = true;
+            for (auto& i : users){
+                if (i.first == n_userid){
+                    std::cout <<  "Incorrect id" << std::endl;
+                    is_new_id = false;
+                    break;
+                }
+            }
+            if (is_new_id) {
+                User* user = new User(n_userid, n_username, n_addinf);
+                users.insert({n_userid, user});
+            }
         }
 
         else if (command_name == "deleteUser"){
@@ -72,8 +82,21 @@ void console_utility(){
         else if (command_name == "createGroup"){
             std::string n_groupid;
             std::cin >> n_groupid;
-            Group* group = new Group(n_groupid);
-            groups.insert({n_groupid, group});
+
+            bool is_new_id = true;
+            for (auto& i : groups){
+                if (i.first == n_groupid){
+                    std::cout <<  "Incorrect id" << std::endl;
+                    is_new_id = false;
+                    break;
+                }
+            }
+
+            if (is_new_id) {
+                Group* group = new Group(n_groupid);
+                groups.insert({n_groupid, group});
+            }
+
         }
 
         else if (command_name == "deleteGroup"){

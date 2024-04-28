@@ -12,15 +12,19 @@ public:
 
     template<typename T>
     void AddValue(T value){
-        constexpr int index = types::template GetIndex<T>();
+        constexpr size_t index = types::template GetIndex<T>();
         values.insert({index, value});
     }
 
     template<typename T>
     T GetValue(){
-        constexpr int index = types::template GetIndex<T>();
-        std::variant<V...> variantValue = values.at(index);
-        return std::get<T>(variantValue);
+        try {
+            constexpr size_t index = types::template GetIndex<T>();
+            std::variant<V...> variantValue = values.at(index);
+            return std::get<T>(variantValue);
+        } catch (...) {
+            std::cout << "Invalid Value" << std::endl;
+        }
     }
 
     template<typename T>
@@ -30,12 +34,12 @@ public:
 
     template<typename T>
     void RemoveValue(){
-        constexpr int index = types::template GetIndex<T>();
+        constexpr size_t index = types::template GetIndex<T>();
         values.erase(index);
     }
 
 private:
-    std::unordered_map<int, std::variant<V...>> values;
+    std::unordered_map<size_t, std::variant<V...>> values;
     using types = TypeList<V...>;
 
 };

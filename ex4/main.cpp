@@ -33,7 +33,6 @@ public:
 
     static int count() { return get_count(); }
 
-private:
     static int& get_count() {
         static int m_count = 0;
         return m_count;

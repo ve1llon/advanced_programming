@@ -7,7 +7,8 @@
 template<typename... nTypes>
 struct TypeList{
 public:
-    template<int i, typename... U>
+
+    template<size_t i, typename... U>
     struct GetType{};
 
     template<typename T, typename... U>
@@ -15,45 +16,48 @@ public:
         using ntype = T;
     };
 
-    template<int i, typename T, typename... U>
+    template<size_t i, typename T, typename... U>
     struct GetType<i, T, U...>{
         using ntype = typename GetType<i - 1, U...>::ntype;
     };
 
-    template<int i>
+    template<size_t i>
     using GetType_call = typename GetType<i, nTypes...>::ntype;
 
 
-    static constexpr int len = sizeof...(nTypes);
+    static constexpr std::size_t len = sizeof...(nTypes);
 
 
     template<typename T>
-    static constexpr int GetIndex(){
-        if constexpr (sizeof...(nTypes) > 0){
-            if constexpr (std::is_same_v<T, GetType_call<0>>)
-                return 0;
-            else
-                return GetIndex<1, T>();
-        }
+    static constexpr size_t GetIndex(){
+        static_assert(sizeof...(nTypes) > 0, "Incorrect Type");
+        if constexpr (std::is_same_v<T, GetType_call<0>>)
+            return 0;
         else
-            return static_cast<int>(-1);
+            return GetIndex<1, T>();
     }
 
-    template<int i, typename T>
-    static constexpr int GetIndex(){
-        if constexpr (i < sizeof...(nTypes)){
-            if constexpr (std::is_same_v<T, GetType_call<i>>)
-                return i;
-            else
-                return GetIndex<i + 1, T>();
-        }
+    template<size_t i, typename T>
+    static constexpr size_t GetIndex(){
+        static_assert(sizeof...(nTypes) > i, "Incorrect Type");
+        if constexpr (std::is_same_v<T, GetType_call<i>>)
+            return i;
         else
-            return static_cast<int>(-1);
+            return GetIndex<i + 1, T>();
     }
-
 
     template<typename T>
-    static constexpr bool IsIncluded = (GetIndex<T>() != static_cast<int>(-1));
+    static constexpr bool CheckIsIncluded() {
+        return false;
+    }
+
+    template<typename T, typename U, typename... V>
+    static constexpr bool CheckIsIncluded() {
+        return std::is_same_v<T, U> || CheckIsIncluded<T, V...>();
+    }
+
+    template<typename T>
+    static constexpr bool IsIncluded = CheckIsIncluded<T, nTypes...>();
 
 
     template<typename T>
@@ -66,3 +70,6 @@ public:
 
 
 #endif // EX1_H
+
+
+

@@ -4,9 +4,7 @@
 
 void test1(){
     using nList0 = TypeList<>;
-
     static_assert(nList0::len == 0);
-    static_assert(nList0::GetIndex<int>() == static_cast<int>(-1));
     static_assert(!nList0::IsIncluded<int>);
 
     using nList1 = nList0::Append<int>;
@@ -23,7 +21,6 @@ void test1(){
     static_assert(nList4::GetIndex<char>() == 1);
     static_assert(nList4::GetIndex<double>() == 2);
     static_assert(nList4::GetIndex<std::vector<int>>() == 3);
-    static_assert(nList4::GetIndex<float>() == static_cast<int>(-1));
     static_assert(nList4::IsIncluded<int>);
     static_assert(nList4::IsIncluded<char>);
     static_assert(nList4::IsIncluded<double>);
@@ -46,7 +43,6 @@ void test1(){
     static_assert(nList6::GetIndex<char>() == 3);
     static_assert(nList6::GetIndex<double>() == 4);
     static_assert(nList6::GetIndex<std::vector<int>>() == 5);
-    static_assert(nList6::GetIndex<float>() == static_cast<int>(-1));
     static_assert(nList6::IsIncluded<std::vector<std::string>>);
     static_assert(nList6::IsIncluded<std::string>);
     static_assert(!nList6::IsIncluded<float>);
