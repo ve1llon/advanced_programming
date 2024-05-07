@@ -5,8 +5,10 @@
 #include <vector>
 #include <string>
 #include <ctime>
+#include <chrono>
+#include <iomanip>
 
-class Log {
+class Log{
 public:
 
     enum Importance_level{
@@ -16,18 +18,18 @@ public:
     };
 
 
-    static Log* Instance() {
+    static Log* Instance(){
         if (!instance)
             instance = new Log();
         return instance;
     }
 
-    void message(Importance_level lvl, std::string msg) {
-        std::time_t timestamp = std::time(nullptr);
+    void message(Importance_level lvl, std::string msg){
+        auto timestamp = std::chrono::system_clock::now();
         events.push_back({timestamp, {lvl, msg}});
     }
 
-    std::string lvl_to_str(Importance_level lvl) {
+    std::string lvl_to_str(Importance_level lvl){
         switch (lvl){
             case LOG_NORMAL:
                 return "LOG_NORMAL";
@@ -38,21 +40,19 @@ public:
         }
     }
 
-    void print() {
-        if (events.size() >= N)
-            for (size_t i = 0; i < N; ++i){
+    void print(){
+        size_t finish_index = events.size() >= N ? events.size() - N : 0;
 
-                auto event = events.back();
+        for (size_t i = events.size(); i > finish_index; --i){
+            std::time_t time_c = std::chrono::system_clock::to_time_t(events[i-1].first);
+            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(events[i-1].first.time_since_epoch()) % 1000;
 
-                char time[90];
-                std::tm* timeinfo = localtime(&event.first);
-                strftime(time, sizeof(time), "%H:%M:%S", timeinfo);
-
-                std::cout << time << " " << lvl_to_str(event.second.first) << ": " << event.second.second << std::endl;
-
-                events.pop_back();
-            }
+            std::cout << std::ctime(&time_c) << ms.count() << "ms " << std::endl;
+            std::cout<< lvl_to_str(events[i-1].second.first) << ": " << events[i-1].second.second << std::endl;
+            std::cout << std::endl;
+        }
     }
+
 
     Log(const Log&) = delete;
     Log& operator=(const Log&) = delete;
@@ -62,11 +62,9 @@ private:
 
     size_t N = 10;
     static Log* instance;
-    std::vector<std::pair<time_t, std::pair<Importance_level, std::string>>> events;
+    std::vector<std::pair<std::chrono::system_clock::time_point, std::pair<Importance_level, std::string>>> events;
 };
 
 Log* Log::instance = nullptr;
-
-
 
 #endif // LOG_H

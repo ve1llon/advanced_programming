@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 8.0.1, 2024-05-01T15:07:46. -->
+<!-- Written by QtCreator 8.0.1, 2024-05-08T01:26:01. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -142,6 +142,7 @@
       <valuemap type="QVariantMap" key="Qbs.Configuration">
        <value type="QString" key="qbs.defaultBuildVariant">release</value>
        <value type="QString" key="qbs.profile">qtc_mingw_805205de</value>
+       <value type="bool" key="qbspm.forceProbes">false</value>
       </valuemap>
       <value type="bool" key="Qbs.Install">true</value>
       <value type="qlonglong" key="Qbs.MaxJobs">8</value>

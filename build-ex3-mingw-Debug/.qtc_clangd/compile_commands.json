@@ -78,10 +78,10 @@
         "-ferror-limit=1000",
         "-x",
         "c++-header",
-        "D:\\C++\\advanced_programming\\ex3\\TypeMap.h"
+        "D:\\C++\\advanced_programming\\ex3\\TypeList.h"
     ],
     "directory": "D:/C++/advanced_programming/build-ex3-mingw-Debug/.qtc_clangd",
-    "file": "D:/C++/advanced_programming/ex3/TypeMap.h"
+    "file": "D:/C++/advanced_programming/ex3/TypeList.h"
 },
 {
     "arguments": [
@@ -120,9 +120,9 @@
         "-ferror-limit=1000",
         "-x",
         "c++-header",
-        "D:\\C++\\advanced_programming\\ex3\\TypeList.h"
+        "D:\\C++\\advanced_programming\\ex3\\TypeMap.h"
     ],
     "directory": "D:/C++/advanced_programming/build-ex3-mingw-Debug/.qtc_clangd",
-    "file": "D:/C++/advanced_programming/ex3/TypeList.h"
+    "file": "D:/C++/advanced_programming/ex3/TypeMap.h"
 }
 ]

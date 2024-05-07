@@ -47,12 +47,12 @@ public:
     }
 
     template<typename T>
-    static constexpr bool CheckIsIncluded() {
+    static constexpr bool CheckIsIncluded(){
         return false;
     }
 
     template<typename T, typename U, typename... V>
-    static constexpr bool CheckIsIncluded() {
+    static constexpr bool CheckIsIncluded(){
         return std::is_same_v<T, U> || CheckIsIncluded<T, V...>();
     }
 
