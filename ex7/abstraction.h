@@ -1,9 +1,6 @@
 #ifndef ABSTRACTION_H
 #define ABSTRACTION_H
 
-#include <iostream>
-#include <vector>
-
 #include "abstract_realization.h"
 #include "concrete_realization.h"
 

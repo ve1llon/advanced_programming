@@ -14,8 +14,8 @@ struct CheckpointName{
 };
 
 struct CheckpointCoord{
-    float latitude; //в диапазоне -90.0 … 90.0 //double
-    float longitude; //в диапазоне -180.0 … 180.0
+    double latitude; //в диапазоне -90.0 … 90.0
+    double longitude; //в диапазоне -180.0 … 180.0
 };
 
 struct CheckpointFine{

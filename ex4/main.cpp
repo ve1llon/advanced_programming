@@ -31,10 +31,10 @@ public:
     counter() { get_count() += 1;}
     ~counter() { get_count() -= 1; }
 
-    static int count() { return get_count(); }
+    static size_t count() { return get_count(); }
 
-    static int& get_count() {
-        static int m_count = 0;
+    static size_t& get_count() {
+        static size_t m_count = 0;
         return m_count;
     }
 };
